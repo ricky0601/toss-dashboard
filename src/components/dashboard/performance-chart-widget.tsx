@@ -1,17 +1,22 @@
-import { chartPeriods, chartSummary } from "@/lib/dashboard/mock-data";
+import type { ChartSummary } from "@/lib/dashboard/types";
 import { WidgetFrame } from "./widget-frame";
 
-export function PerformanceChartWidget() {
+type PerformanceChartWidgetProps = {
+  readonly summary: ChartSummary;
+  readonly periods: readonly string[];
+};
+
+export function PerformanceChartWidget({ summary, periods }: PerformanceChartWidgetProps) {
   return (
     <WidgetFrame id="performance" title="자산 흐름" eyebrow="최근 1개월">
       <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
-        <p className="text-widget-metric font-bold text-primary">{chartSummary.change}</p>
+        <p className="text-widget-metric font-bold text-primary">{summary.change}</p>
         <div aria-label="차트 기간" className="flex rounded-control bg-surface-strong p-1">
-          {chartPeriods.map((period) => (
+          {periods.map((period) => (
             <span
               key={period}
-              aria-current={period === chartSummary.period ? "true" : undefined}
-              className={`rounded-control px-3 py-2 text-caption font-semibold ${period === chartSummary.period ? "bg-surface-raised text-primary" : "text-tertiary"}`}
+              aria-current={period === summary.period ? "true" : undefined}
+              className={`rounded-control px-3 py-2 text-caption font-semibold ${period === summary.period ? "bg-surface-raised text-primary" : "text-tertiary"}`}
             >
               {period}
             </span>
@@ -27,14 +32,14 @@ export function PerformanceChartWidget() {
             <line x1="8" x2="392" y1="92" y2="92" />
             <line x1="8" x2="392" y1="144" y2="144" />
           </g>
-          <path d={chartSummary.areaPath} className="chart-area" />
-          <path d={chartSummary.linePath} className="chart-line" />
+          <path d={summary.areaPath} className="chart-area" />
+          <path d={summary.linePath} className="chart-line" />
           <circle cx="392" cy="34" r="5" className="fill-accent stroke-surface-raised stroke-4" />
         </svg>
         <figcaption className="mt-2 flex justify-between text-caption font-semibold text-tertiary">
-          <span>{chartSummary.startLabel}</span>
-          <span>{chartSummary.middleLabel}</span>
-          <span>{chartSummary.endLabel}</span>
+          <span>{summary.startLabel}</span>
+          <span>{summary.middleLabel}</span>
+          <span>{summary.endLabel}</span>
         </figcaption>
       </figure>
     </WidgetFrame>
