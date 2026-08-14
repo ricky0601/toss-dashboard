@@ -1,12 +1,13 @@
 import type { ComponentType } from "react";
 import { dashboardWidgets } from "@/lib/dashboard/widget-registry";
-import type { WidgetId, WidgetSpan } from "@/lib/dashboard/types";
+import type { WidgetId } from "@/lib/dashboard/types";
 import { AllocationWidget } from "./allocation-widget";
 import { NewsWidget, AlertsWidget } from "./news-alerts-widgets";
 import { PerformanceChartWidget } from "./performance-chart-widget";
 import { ReturnsWidget } from "./returns-widget";
 import { TotalAssetsWidget } from "./total-assets-widget";
 import { WatchlistWidget } from "./watchlist-widget";
+import { WidgetLayoutEditor, type WidgetSlot } from "./widget-layout-editor";
 
 const widgetComponents = {
   "total-assets": TotalAssetsWidget,
@@ -18,33 +19,28 @@ const widgetComponents = {
   alerts: AlertsWidget,
 } satisfies Record<WidgetId, ComponentType>;
 
-function spanClass(span: WidgetSpan): string {
-  switch (span) {
-    case "full":
-      return "md:col-span-12";
-    case "third":
-      return "md:col-span-4";
-    case "two-thirds":
-      return "md:col-span-8";
-    case "five":
-      return "md:col-span-5";
-    case "seven":
-      return "md:col-span-7";
-  }
-}
+const widgetLabels = {
+  "total-assets": "총 자산",
+  returns: "투자 수익",
+  "performance-chart": "자산 흐름",
+  watchlist: "관심 종목",
+  allocation: "자산 구성",
+  news: "오늘의 투자 소식",
+  alerts: "알림",
+} as const satisfies Record<WidgetId, string>;
 
 export function DashboardWidgetGrid() {
-  return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-12" aria-label="투자 위젯">
-      {dashboardWidgets.map((widget) => {
-        const WidgetComponent = widgetComponents[widget.id];
+  const widgetSlots = dashboardWidgets.map((widget) => {
+    const WidgetComponent = widgetComponents[widget.id];
 
-        return (
-          <div key={widget.id} className={spanClass(widget.span)}>
-            <WidgetComponent />
-          </div>
-        );
-      })}
-    </div>
+    return {
+      id: widget.id,
+      label: widgetLabels[widget.id],
+      content: <WidgetComponent />,
+    };
+  }) satisfies readonly WidgetSlot[];
+
+  return (
+    <WidgetLayoutEditor widgets={widgetSlots} />
   );
 }
