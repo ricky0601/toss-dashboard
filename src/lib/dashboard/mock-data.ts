@@ -1,8 +1,13 @@
 import type {
   AlertItem,
   AllocationItem,
+  ChartSummary,
+  DashboardData,
+  InvestmentAccountStatus,
   MarketItem,
   NewsItem,
+  PortfolioOverview,
+  ReturnSummary,
 } from "./types";
 
 export const portfolioOverview = {
@@ -10,13 +15,13 @@ export const portfolioOverview = {
   dailyChange: "+842,510원",
   dailyRate: "+0.66%",
   updatedAt: "오늘 오전 10:30 기준",
-} as const;
+} as const satisfies PortfolioOverview;
 
 export const returnSummary = {
   totalReturn: "+12,804,120원",
   returnRate: "+11.07%",
   investedPrincipal: "115,646,200원",
-} as const;
+} as const satisfies ReturnSummary;
 
 export const chartSummary = {
   period: "1개월",
@@ -26,7 +31,7 @@ export const chartSummary = {
   endLabel: "8.14",
   linePath: "M8 118 C34 112 42 92 68 96 S104 118 128 88 S166 70 188 80 S226 108 250 66 S292 44 316 54 S352 30 392 34",
   areaPath: "M8 118 C34 112 42 92 68 96 S104 118 128 88 S166 70 188 80 S226 108 250 66 S292 44 316 54 S352 30 392 34 L392 144 L8 144 Z",
-} as const;
+} as const satisfies ChartSummary;
 
 export const chartPeriods = ["1주", "1개월", "3개월", "1년"] as const;
 
@@ -91,3 +96,20 @@ export const alerts = [
     status: "scheduled",
   },
 ] as const satisfies readonly AlertItem[];
+
+export const mockAccountStatus = {
+  kind: "mock",
+  reason: "api-unavailable",
+} as const satisfies InvestmentAccountStatus;
+
+export const mockDashboardData = {
+  portfolioOverview,
+  returnSummary,
+  chartSummary,
+  chartPeriods,
+  watchlist,
+  allocation,
+  news,
+  alerts,
+  accountStatus: mockAccountStatus,
+} as const satisfies DashboardData;
