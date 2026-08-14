@@ -3,6 +3,8 @@ import test from "node:test";
 import { dashboardWidgets } from "./widget-registry";
 import {
   createDefaultWidgetLayout,
+  getVisibleWidgetIds,
+  isWidgetVisible,
   normalizeWidgetLayout,
   parseStoredWidgetLayout,
   reorderWidgetLayout,
@@ -104,6 +106,18 @@ test("updates widget visibility without changing other fields", () => {
     order: 3,
     span: "five",
   });
+});
+
+test("omits hidden watchlist from the visible widget ids", () => {
+  // Given: a layout with watchlist hidden
+  const layout = updateWidgetVisibility(createDefaultWidgetLayout(), "watchlist", false);
+
+  // When: visible widget ids are collected
+  const visibleWidgetIds = getVisibleWidgetIds(layout);
+
+  // Then: watchlist is excluded and other visible widgets remain available
+  assert.deepEqual(visibleWidgetIds, ["total-assets", "returns", "performance-chart", "allocation", "news", "alerts"]);
+  assert.equal(isWidgetVisible(layout, "watchlist"), false);
 });
 
 test("updates widget span without changing other fields", () => {

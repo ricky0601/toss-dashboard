@@ -8,6 +8,7 @@ import {
   serializeWidgetLayout,
   updateWidgetSpan,
   updateWidgetVisibility,
+  WIDGET_LAYOUT_CHANGED_EVENT,
   WIDGET_LAYOUT_STORAGE_KEY,
 } from "@/lib/dashboard/widget-layout";
 import type { StoredWidgetLayoutV1, WidgetId, WidgetSpan } from "@/lib/dashboard/types";
@@ -30,7 +31,6 @@ const spanOptions = [
   { value: "seven", label: "7/12 (7칸)" },
 ] as const satisfies readonly { readonly value: WidgetSpan; readonly label: string }[];
 
-const layoutChangedEvent = "toss-dashboard:widget-layout-changed";
 const secondaryButtonClass =
   "motion-micro min-h-11 whitespace-nowrap rounded-control bg-surface-raised px-4 text-body-small font-semibold text-secondary transition-colors enabled:hover:bg-surface-strong enabled:hover:text-primary disabled:cursor-not-allowed disabled:text-disabled";
 
@@ -64,11 +64,11 @@ function parseWidgetSpan(value: string): WidgetSpan | null {
 
 function subscribeToStoredLayout(onStoreChange: () => void): () => void {
   window.addEventListener("storage", onStoreChange);
-  window.addEventListener(layoutChangedEvent, onStoreChange);
+  window.addEventListener(WIDGET_LAYOUT_CHANGED_EVENT, onStoreChange);
 
   return () => {
     window.removeEventListener("storage", onStoreChange);
-    window.removeEventListener(layoutChangedEvent, onStoreChange);
+    window.removeEventListener(WIDGET_LAYOUT_CHANGED_EVENT, onStoreChange);
   };
 }
 
@@ -82,7 +82,7 @@ function getServerStoredLayoutValue(): null {
 
 function persistWidgetLayout(layout: StoredWidgetLayoutV1): void {
   window.localStorage.setItem(WIDGET_LAYOUT_STORAGE_KEY, serializeWidgetLayout(layout));
-  window.dispatchEvent(new Event(layoutChangedEvent));
+  window.dispatchEvent(new Event(WIDGET_LAYOUT_CHANGED_EVENT));
 }
 
 export function WidgetLayoutEditor({ widgets }: WidgetLayoutEditorProps) {

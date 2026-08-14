@@ -8,6 +8,7 @@ import type {
 } from "./types";
 
 export const WIDGET_LAYOUT_STORAGE_KEY = "toss-dashboard.widget-layout";
+export const WIDGET_LAYOUT_CHANGED_EVENT = "toss-dashboard:widget-layout-changed";
 
 const moveOffset = {
   up: -1,
@@ -108,6 +109,14 @@ export function parseStoredWidgetLayout(value: string | null): StoredWidgetLayou
 
 export function serializeWidgetLayout(layout: StoredWidgetLayoutV1): string {
   return JSON.stringify(layout);
+}
+
+export function getVisibleWidgetIds(layout: StoredWidgetLayoutV1): readonly WidgetId[] {
+  return layout.items.filter((item) => item.visible).map((item) => item.id);
+}
+
+export function isWidgetVisible(layout: StoredWidgetLayoutV1, id: WidgetId): boolean {
+  return layout.items.some((item) => item.id === id && item.visible);
 }
 
 export function reorderWidgetLayout(
