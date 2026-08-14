@@ -42,3 +42,17 @@ export type WidgetDefinition = {
   readonly id: WidgetId;
   readonly span: WidgetSpan;
 };
+
+export type WidgetLayoutItem = {
+  readonly id: WidgetId;
+  readonly visible: boolean;
+  readonly order: number;
+  readonly span: WidgetSpan;
+};
+
+export type StoredWidgetLayoutV1 = {
+  readonly version: 1;
+  readonly items: readonly WidgetLayoutItem[];
+};
+
+export type WidgetMoveDirection = "up" | "down";
