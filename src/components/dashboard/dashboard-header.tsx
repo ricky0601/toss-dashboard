@@ -1,11 +1,5 @@
 import { DashboardIcon } from "./dashboard-icon";
-
-const navigation = [
-  { label: "홈", href: "#overview", current: true },
-  { label: "내 투자", href: "#returns", current: false },
-  { label: "관심종목", href: "#watchlist", current: false },
-  { label: "소식", href: "#news", current: false },
-] as const;
+import { DashboardHeaderNav } from "./dashboard-header-nav";
 
 export function DashboardHeader() {
   return (
@@ -18,18 +12,7 @@ export function DashboardHeader() {
             </span>
             <span>투자</span>
           </a>
-          <div className="hidden items-center gap-1 md:flex">
-            {navigation.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                aria-current={item.current ? "page" : undefined}
-                className={`motion-micro rounded-control px-4 py-3 text-body-small font-semibold transition-colors ${item.current ? "bg-surface-strong text-primary" : "text-tertiary hover:bg-surface-subtle hover:text-primary"}`}
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
+          <DashboardHeaderNav />
         </div>
         <div className="flex items-center gap-3" aria-label="사용자 메뉴">
           <span className="relative grid size-10 place-items-center rounded-full bg-surface-strong text-secondary" aria-label="새 알림 2개">

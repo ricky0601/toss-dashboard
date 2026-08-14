@@ -111,6 +111,7 @@ All spacing derives from a **4px** base.
 - **Accessibility**: labelled primary navigation, current page via `aria-current`, 44px minimum pointer target.
 - **Motion**: color and transform only, using micro timing.
 - **Layout**: full-width sticky cluster; document remains the scroll owner. Hash-anchor navigation offsets by the header height plus `--space-4`, so targets remain visible below the sticky layer.
+- **Widget visibility sync**: `홈`/총자산 remains the stable anchor. Widget-backed primary links are hidden when the corresponding saved widget is hidden, then return after the widget is shown and saved again.
 
 ### Widget Frame
 
