@@ -1,4 +1,3 @@
-import { allocation } from "@/lib/dashboard/mock-data";
 import type { AllocationItem } from "@/lib/dashboard/types";
 import { WidgetFrame } from "./widget-frame";
 
@@ -15,7 +14,11 @@ function toneClass(tone: AllocationItem["tone"]): string {
   }
 }
 
-export function AllocationWidget() {
+type AllocationWidgetProps = {
+  readonly items: readonly AllocationItem[];
+};
+
+export function AllocationWidget({ items }: AllocationWidgetProps) {
   return (
     <WidgetFrame id="allocation" title="자산 구성" eyebrow="총 자산 기준">
       <div className="grid gap-8 sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-center">
@@ -26,7 +29,7 @@ export function AllocationWidget() {
           </div>
         </div>
         <ul className="space-y-4">
-          {allocation.map((item) => (
+          {items.map((item) => (
             <li key={item.label} className="flex items-center justify-between gap-4">
               <div className="flex min-w-0 items-center gap-3">
                 <span className={`size-2.5 shrink-0 rounded-full ${toneClass(item.tone)}`} />

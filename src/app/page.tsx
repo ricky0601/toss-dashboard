@@ -1,7 +1,13 @@
+import { connection } from "next/server";
+import { DashboardDataError } from "@/components/dashboard/dashboard-data-error";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { DashboardWidgetGrid } from "@/components/dashboard/dashboard-widget-grid";
+import { getDashboardData } from "@/lib/dashboard/data";
 
-export default function Home() {
+export default async function Home() {
+  await connection();
+  const dashboardDataState = await getDashboardData();
+
   return (
     <div className="min-h-dvh bg-canvas text-primary">
       <DashboardHeader />
@@ -17,7 +23,11 @@ export default function Home() {
             오늘의 자산 흐름과 관심 종목을 차분히 살펴보세요.
           </p>
         </header>
-        <DashboardWidgetGrid />
+        {dashboardDataState.kind === "ready" ? (
+          <DashboardWidgetGrid data={dashboardDataState.data} />
+        ) : (
+          <DashboardDataError reason={dashboardDataState.reason} />
+        )}
       </main>
     </div>
   );

@@ -1,5 +1,4 @@
-import { watchlist } from "@/lib/dashboard/mock-data";
-import type { PerformanceDirection } from "@/lib/dashboard/types";
+import type { MarketItem, PerformanceDirection } from "@/lib/dashboard/types";
 import { WidgetFrame } from "./widget-frame";
 
 function performanceClass(direction: PerformanceDirection): string {
@@ -13,11 +12,15 @@ function performanceClass(direction: PerformanceDirection): string {
   }
 }
 
-export function WatchlistWidget() {
+type WatchlistWidgetProps = {
+  readonly items: readonly MarketItem[];
+};
+
+export function WatchlistWidget({ items }: WatchlistWidgetProps) {
   return (
     <WidgetFrame id="watchlist" title="관심 종목" eyebrow="실시간 시세">
       <ul className="space-y-3">
-        {watchlist.map((item) => (
+        {items.map((item) => (
           <li key={item.symbol} className="flex min-w-0 items-center justify-between gap-4 rounded-medium bg-surface-raised p-4">
             <div className="min-w-0">
               <p className="truncate text-body font-bold text-primary">{item.name}</p>
