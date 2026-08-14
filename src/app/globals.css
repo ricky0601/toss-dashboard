@@ -25,6 +25,8 @@
   --radius-large: 1.5rem;
   --duration-micro: 120ms;
   --duration-standard: 220ms;
+  --header-height: 4rem;
+  --anchor-scroll-offset: calc(var(--header-height) + 1rem);
 }
 
 @theme inline {
@@ -81,6 +83,7 @@
 
 html {
   background: var(--canvas);
+  scroll-padding-top: var(--anchor-scroll-offset);
 }
 
 body {

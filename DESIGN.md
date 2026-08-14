@@ -110,7 +110,7 @@ All spacing derives from a **4px** base.
 - **States**: current link, default, hover, active, focus-visible.
 - **Accessibility**: labelled primary navigation, current page via `aria-current`, 44px minimum pointer target.
 - **Motion**: color and transform only, using micro timing.
-- **Layout**: full-width sticky cluster; document remains the scroll owner.
+- **Layout**: full-width sticky cluster; document remains the scroll owner. Hash-anchor navigation offsets by the header height plus `--space-4`, so targets remain visible below the sticky layer.
 
 ### Widget Frame
 
