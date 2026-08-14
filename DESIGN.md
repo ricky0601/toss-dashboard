@@ -152,6 +152,16 @@ All spacing derives from a **4px** base.
 - **Motion**: micro background/text transition; no sliding layout animation.
 - **Layout**: wrapping cluster.
 
+### Widget Editing UI
+
+- **Structure**: compact configuration toolbar above the widget grid; edit mode adds one control cluster before each widget preview.
+- **Variants**: view mode offers edit and reset; edit mode offers save, cancel, reset, visibility, order, and span controls.
+- **Spacing**: `--space-2`, `--space-3`, `--space-4`, and `--space-6`; controls use at least 44px block size.
+- **States**: default, hover, active, focus-visible, checked, selected, and disabled at reorder boundaries.
+- **Accessibility**: native buttons, checkbox, and labelled select; Korean action labels state the outcome; hidden widgets remain available in edit mode.
+- **Motion**: micro color and press feedback only; widget reordering does not animate layout.
+- **Layout**: toolbar and per-widget clusters wrap on wide screens and stack on mobile; widget previews continue to follow the 12-column span system.
+
 ### Allocation Legend
 
 - **Structure**: accessible SVG donut plus labelled percentage list.
